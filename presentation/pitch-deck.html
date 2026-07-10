@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务经营看板 Skill 套件 - 路演</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/atom-one-dark.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        .reveal {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal .slides section {
+            padding: 60px 80px;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text);
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .reveal h1 {
+            font-size: 3.2em;
+            margin-bottom: 0.3em;
+            background: linear-gradient(135deg, #fff 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reveal h2 {
+            font-size: 2.4em;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal h3 {
+            font-size: 1.6em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal p, .reveal li {
+            color: var(--text-muted);
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .reveal ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .reveal ul li {
+            position: relative;
+            padding-left: 1.5em;
+            margin-bottom: 0.6em;
+        }
+
+        .reveal ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .reveal pre {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            font-size: 0.55em;
+            width: 100%;
+        }
+
+        .reveal pre code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            line-height: 1.5;
+        }
+
+        .reveal .center {
+            text-align: center;
+            align-items: center;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.7em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .tag.accent {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin-bottom: 16px;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        .metric-row {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .metric {
+            flex: 1;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+        .architecture {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .arch-box {
+            background: var(--surface);
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 16px;
+            padding: 28px 36px;
+            text-align: center;
+            min-width: 220px;
+        }
+
+        .arch-box .icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+
+        .arch-box h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .arch-box p {
+            font-size: 0.8em;
+            margin: 0;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: var(--primary);
+        }
+
+        .code-window {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-header {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        }
+
+        .code-header .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-header .dot.red { background: #ef4444; }
+        .code-header .dot.yellow { background: #f59e0b; }
+        .code-header .dot.green { background: #10b981; }
+
+        .code-content {
+            padding: 20px;
+            font-size: 0.85em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border-left: 4px solid var(--primary);
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 30px 0;
+        }
+
+        .highlight-box p {
+            color: #e2e8f0;
+            font-size: 1.3em;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .footer-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.7em;
+        }
+
+        .github-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            padding: 14px 28px;
+            color: #fff;
+            font-size: 0.9em;
+            margin-top: 30px;
+            text-decoration: none;
+        }
+
+        .fragment.fade-up {
+            transform: translateY(20px);
+        }
+
+        @media (max-width: 1200px) {
+            .reveal h1 { font-size: 2.4em; }
+            .reveal h2 { font-size: 1.8em; }
+            .card-grid { grid-template-columns: 1fr; }
+            .metric-row { flex-direction: column; }
+            .architecture { flex-direction: column; }
+            .arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- 封面 -->
+            <section class="center">
+                <div class="tag">Claude Code Skill</div>
+                <div class="tag accent">一个 Skill 一个岗位</div>
+                <h1>财务经营看板<br>Skill 套件</h1>
+                <p style="font-size: 1.3em; color: #cbd5e1; margin-top: 20px;">
+                    从混乱 Excel 到可交互经营看板
+                </p>
+                <div style="margin-top: 50px;">
+                    <a href="https://github.com/zhuan447133268-lab/financial-dashboard-skills" class="github-badge" target="_blank">
+                        <svg height="24" viewBox="0 0 16 16" width="24" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        github.com/zhuan447133268-lab/financial-dashboard-skills
+                    </a>
+                </div>
+            </section>
+
+            <!-- 痛点 -->
+            <section>
+                <h2>一个高频但痛苦的场景</h2>
+                <div class="card-grid">
+                    <div class="card fragment">
+                        <div class="card-icon">📁</div>
+                        <h3>数据格式混乱</h3>
+                        <p>客户丢过来一堆 Excel：表头带空格、合并单元格、单位不统一、科目命名随意</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon">🤔</div>
+                        <h3>口径反复确认</h3>
+                        <p>每次都要重新理解"收入""成本""达成率"到底怎么算，沟通成本高</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon">📊</div>
+                        <h3>做图重复劳动</h3>
+                        <p>清洗完数据后，还要手动做趋势图、对比图、排行图，无法复用</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon">🤖</div>
+                        <h3>AI 不敢信</h3>
+                        <p>让 AI 直接生成建议，不知道数字从哪来，不敢交给业务方</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 解决方案 -->
+            <section>
+                <h2>解决方案：两个 AI 岗位</h2>
+                <p style="font-size: 1.2em; margin-bottom: 40px;">
+                    把"从 Excel 到看板"的重复判断写成 Skill，一个 Skill 顶一个岗位。
+                </p>
+                <div class="architecture">
+                    <div class="arch-box fragment">
+                        <div class="icon">🔍</div>
+                        <h3>financial-data-teller</h3>
+                        <p>财务数据识岗员</p>
+                        <p style="margin-top: 10px; color: #94a3b8;">读取 Excel → 输出《数据资产说明书》</p>
+                    </div>
+                    <div class="arrow fragment">→</div>
+                    <div class="arch-box fragment">
+                        <div class="icon">✅</div>
+                        <h3>人工确认口径</h3>
+                        <p>关键判断不猜测</p>
+                        <p style="margin-top: 10px; color: #94a3b8;">确认维度、单位、阈值、关联字段</p>
+                    </div>
+                    <div class="arrow fragment">→</div>
+                    <div class="arch-box fragment">
+                        <div class="icon">📈</div>
+                        <h3>financial-dashboard-builder</h3>
+                        <p>看板设计师</p>
+                        <p style="margin-top: 10px; color: #94a3b8;">生成 ECharts HTML 看板</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo 流程 -->
+            <section>
+                <h2>Demo：现场跑一个真实案例</h2>
+                <div class="metric-row">
+                    <div class="metric fragment">
+                        <div class="metric-value">3</div>
+                        <div class="metric-label">工作表</div>
+                    </div>
+                    <div class="metric fragment">
+                        <div class="metric-value">2</div>
+                        <div class="metric-label">埋入的数据问题</div>
+                    </div>
+                    <div class="metric fragment">
+                        <div class="metric-value">4</div>
+                        <div class="metric-label">自动生成的图表</div>
+                    </div>
+                    <div class="metric fragment">
+                        <div class="metric-value">2</div>
+                        <div class="metric-label">规则预警</div>
+                    </div>
+                </div>
+                <div class="highlight-box fragment">
+                    <p>"我故意在示例数据里埋了两个坑：表头有空格、预算成本里有'暂估'，看 Skill 能不能识别出来。"</p>
+                </div>
+            </section>
+
+            <!-- data-teller 代码 -->
+            <section>
+                <h2>Step 1：让 AI 识别数据</h2>
+                <div class="code-window">
+                    <div class="code-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="bash">python skills/financial-data-teller/data_teller.py \
+  --input examples/company-dashboard/input \
+  --output examples/company-dashboard/output/数据资产说明书.md</code></pre>
+                    </div>
+                </div>
+                <ul style="margin-top: 30px;">
+                    <li class="fragment">自动识别表类型：预算表、实际发生表、组织基础信息表</li>
+                    <li class="fragment">自动标注字段语义：时间、主体、金额、科目</li>
+                    <li class="fragment">自动输出异常清单和可分析维度候选</li>
+                </ul>
+            </section>
+
+            <!-- 数据资产说明书 -->
+            <section>
+                <h2>它发现了什么？</h2>
+                <div class="card-grid">
+                    <div class="card fragment" style="border-color: rgba(239, 68, 68, 0.4);">
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.2);">⚠️</div>
+                        <h3 style="color: #fca5a5;">高风险异常</h3>
+                        <p>表头存在首尾空格，可能导致按列名读取失败</p>
+                    </div>
+                    <div class="card fragment" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <div class="card-icon" style="background: rgba(245, 158, 11, 0.2);">📝</div>
+                        <h3 style="color: #fcd34d;">中风险异常</h3>
+                        <p>金额字段存在非数字占位值 "暂估"，影响汇总计算</p>
+                    </div>
+                </div>
+                <div class="highlight-box fragment" style="margin-top: 40px;">
+                    <p>"这个 Skill 不是默默帮你清洗，而是先把问题暴露出来，让关键口径由人来确认。"</p>
+                </div>
+            </section>
+
+            <!-- dashboard-builder 代码 -->
+            <section>
+                <h2>Step 2：生成可交互看板</h2>
+                <div class="code-window">
+                    <div class="code-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="bash">python skills/financial-dashboard-builder/dashboard_builder.py \
+  --config examples/company-dashboard/output/看板配置.json \
+  --output examples/company-dashboard/output/经营分析看板.html</code></pre>
+                    </div>
+                </div>
+                <ul style="margin-top: 30px;">
+                    <li class="fragment">单文件 HTML，内嵌 ECharts，浏览器直接打开</li>
+                    <li class="fragment">4 个 KPI 卡片 + 4 个交互图表</li>
+                    <li class="fragment">规则驱动的核心发现与建议</li>
+                </ul>
+            </section>
+
+            <!-- 看板效果 -->
+            <section>
+                <h2>看板长什么样？</h2>
+                <div class="card-grid">
+                    <div class="card fragment">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.2);">💰</div>
+                        <h3 style="color: #6ee7b7;">KPI 卡片</h3>
+                        <p>实际收入、预算收入、收入达成率、成本偏差率</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.2);">📈</div>
+                        <h3 style="color: #93c5fd;">趋势图表</h3>
+                        <p>月度收入/成本趋势、预算达成率、城市对比、主体排行</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.2);">🚨</div>
+                        <h3 style="color: #fca5a5;">自动预警</h3>
+                        <p>"实际成本超出预算 22.6%，建议核查成本科目"</p>
+                    </div>
+                    <div class="card fragment">
+                        <div class="card-icon" style="background: rgba(139, 92, 246, 0.2);">📱</div>
+                        <h3 style="color: #c4b5fd;">响应式布局</h3>
+                        <p>大屏投影、笔记本、移动端都能正常展示</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 三大亮点 -->
+            <section>
+                <h2>为什么这个 Skill 好用？</h2>
+                <div style="margin-top: 30px;">
+                    <div class="card fragment" style="margin-bottom: 24px; display: flex; align-items: center; gap: 24px;">
+                        <div class="card-icon" style="margin: 0; min-width: 56px; height: 56px; font-size: 1.8em;">🪶</div>
+                        <div>
+                            <h3 style="margin-bottom: 8px;">轻量，无依赖</h3>
+                            <p>纯 Python，只需 pandas + openpyxl + jinja2，无需 MCP server / Node.js，拿到就能跑</p>
+                        </div>
+                    </div>
+                    <div class="card fragment" style="margin-bottom: 24px; display: flex; align-items: center; gap: 24px;">
+                        <div class="card-icon" style="margin: 0; min-width: 56px; height: 56px; font-size: 1.8em; background: rgba(16, 185, 129, 0.2);">✓</div>
+                        <div>
+                            <h3 style="margin-bottom: 8px;">可验证，敢用</h3>
+                            <p>只做事实识别和规则判断，所有数字带来源、公式、异常报告，不接 AI 自由生成</p>
+                        </div>
+                    </div>
+                    <div class="card fragment" style="display: flex; align-items: center; gap: 24px;">
+                        <div class="card-icon" style="margin: 0; min-width: 56px; height: 56px; font-size: 1.8em; background: rgba(139, 92, 246, 0.2);">🎯</div>
+                        <div>
+                            <h3 style="margin-bottom: 8px;">一个 Skill 一个岗位</h3>
+                            <p>识数据的、做看板的职责分离，可独立复用，也可串联成工作流</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 对比 -->
+            <section>
+                <h2>它改变了什么？</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 0.85em;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid rgba(148, 163, 184, 0.3);">
+                            <th style="padding: 16px; text-align: left; color: #94a3b8;">环节</th>
+                            <th style="padding: 16px; text-align: left; color: #94a3b8;">传统方式</th>
+                            <th style="padding: 16px; text-align: left; color: #94a3b8;">用 Skill 之后</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.15);">
+                            <td style="padding: 16px; color: #e2e8f0;">理解数据</td>
+                            <td style="padding: 16px; color: #94a3b8;">人工逐张看表</td>
+                            <td style="padding: 16px; color: #6ee7b7;">AI 自动生成数据资产说明书</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.15);">
+                            <td style="padding: 16px; color: #e2e8f0;">口径确认</td>
+                            <td style="padding: 16px; color: #94a3b8;">反复沟通</td>
+                            <td style="padding: 16px; color: #6ee7b7;">异常清单 + 候选维度，一次确认</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.15);">
+                            <td style="padding: 16px; color: #e2e8f0;">生成看板</td>
+                            <td style="padding: 16px; color: #94a3b8;">手动画图</td>
+                            <td style="padding: 16px; color: #6ee7b7;">一条命令生成可交互 HTML</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 16px; color: #e2e8f0;">经营建议</td>
+                            <td style="padding: 16px; color: #94a3b8;">凭经验写</td>
+                            <td style="padding: 16px; color: #6ee7b7;">规则引擎自动触发预警</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 开源与下一步 -->
+            <section>
+                <h2>开源与下一步</h2>
+                <div class="highlight-box fragment">
+                    <p>"这个 Skill 不是帮你少做一张图，而是把'做经营分析看板'这件事，从每次都要重新沟通口径、清洗数据、画图表，变成了一个可复用的岗位。"</p>
+                </div>
+                <div style="margin-top: 40px;">
+                    <a href="https://github.com/zhuan447133268-lab/financial-dashboard-skills" class="github-badge" target="_blank" style="font-size: 1em; padding: 18px 32px;">
+                        <svg height="28" viewBox="0 0 16 16" width="28" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        github.com/zhuan447133268-lab/financial-dashboard-skills
+                    </a>
+                </div>
+                <ul style="margin-top: 40px;">
+                    <li class="fragment">下一步：增加科目结构分析、同比环比、更多行业示例</li>
+                    <li class="fragment">计划投稿到 modelstudioai/skills 生态</li>
+                </ul>
+            </section>
+
+            <!-- 感谢页 -->
+            <section class="center">
+                <h1 style="font-size: 4em;">谢谢聆听</h1>
+                <p style="font-size: 1.5em; color: #94a3b8; margin-top: 30px;">
+                    欢迎试用、提 issue、一起完善
+                </p>
+                <div style="margin-top: 60px;">
+                    <a href="https://github.com/zhuan447133268-lab/financial-dashboard-skills" class="github-badge" target="_blank" style="font-size: 1.1em;">
+                        <svg height="28" viewBox="0 0 16 16" width="28" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        github.com/zhuan447133268-lab/financial-dashboard-skills
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            width: 1920,
+            height: 1080,
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            center: false,
+            plugins: [RevealHighlight]
+        });
+
+        // 空格/右箭头翻页，ESC 看概览
+        Reveal.configure({
+            keyboard: {
+                13: 'next', // Enter
+                32: 'next', // Space
+                37: 'prev', // Left
+                39: 'next'  // Right
+            }
+        });
+    </script>
+</body>
+</html>
