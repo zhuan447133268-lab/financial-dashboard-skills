@@ -11,8 +11,6 @@ venv/
 output/
 *.html
 !examples/**/output/*.html
-!presentation/*.html
-!presentation/**/*.html
 *.xlsx
 !examples/**/input/*.xlsx
 evals_report.json
