@@ -1,0 +1,27 @@
+[
+  {
+    "name": "生成完整看板",
+    "input": "examples/company-dashboard/output/看板配置.json",
+    "expected_outputs": [
+      "生成单文件 HTML 看板",
+      "包含 KPI 卡片",
+      "包含至少 4 个图表",
+      "包含核心发现与建议"
+    ]
+  },
+  {
+    "name": "达成率预警",
+    "input": "收入达成率低于 80% 的数据",
+    "expected_outputs": [
+      "核心发现中包含高等级预警",
+      "预警文本包含具体达成率数值"
+    ]
+  },
+  {
+    "name": "成本偏差预警",
+    "input": "成本超出预算 10% 的数据",
+    "expected_outputs": [
+      "核心发现中包含成本偏差高等级预警"
+    ]
+  }
+]

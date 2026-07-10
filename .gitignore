@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+*.db
+*.log
+
+# 生成的输出文件（示例输出除外）
+output/
+*.html
+!examples/**/output/*.html
+*.xlsx
+!examples/**/input/*.xlsx
+evals_report.json
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
